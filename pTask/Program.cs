@@ -37,6 +37,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder.WithOrigins("http://localhost:8080") // Agrega la URL del frontend
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -78,6 +86,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication(); // Para habilitar la autenticación JWT
 app.UseAuthorization();

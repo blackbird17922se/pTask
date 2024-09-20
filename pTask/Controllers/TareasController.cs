@@ -111,5 +111,19 @@ namespace pTask.Controllers
         {
             return _context.TareaItem.Any(t => t.Id == id);
         }
+
+        // obtener tarea por id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTarea(int id)
+        {
+            var tarea = await _context.TareaItem.FindAsync(id);
+
+            if(tarea == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(tarea);
+        }
     }
 }

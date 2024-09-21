@@ -1,15 +1,13 @@
-- documentacion y manual usuario
-    !indicar q el ckek solo aparece para editar una tarea
-
-
+- corregir fallo q formulario no se ve bien en la otra pantalla
 - quitar comentarios
 
 ******** PLUS ******
-cambiar nombre propiedad "passwHast" a pass
-- correccion nombre de metodos: agragrtarea, cambiarestadotarea
+
 
 
 ********** DONE ************
+- documentacion y manual usuario
+    !indicar q el ckek solo aparece para editar una tarea
 - mejorar alertas
     - crear
 - revisar visual responsive
@@ -26,4 +24,6 @@ que al expirar el tiempo token, la sesion se cierre
 - mejorar alertas
     - editar
     - eliminar
+cambiar nombre propiedad "passwHast" a pass
+- correccion nombre de metodos: agragrtarea, cambiarestadotarea
     

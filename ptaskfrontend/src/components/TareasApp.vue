@@ -276,18 +276,15 @@ export default {
 @media (min-width: 769px) {
     .tareas-form {
         position: fixed;
-        top: 14.5%;
+        top: 88px; /* Dejar espacio por la barra superior */
         left: 0;
-        height: 100%;
+        height: calc(100% - 88px); /* Ajustar altura */
         width: 32%;
-        /* Ancho del formulario en pantallas grandes */
         background-color: #f1f1f1;
         padding: 20px;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-        /* Sombra para darle efecto de barra lateral */
         z-index: 100;
         transform: translateX(-100%);
-        /* Desplaza el formulario fuera de la vista hacia la izquierda */
         opacity: 0;
     }
 
@@ -299,38 +296,43 @@ export default {
     }
 
     .lista-tareas {
-        margin-top: 30px; /* Agrega espacio arriba para el formulario */
+        margin-top: 79px; 
+        /* Agrega espacio arriba para el formulario */
     }
 }
 
 /* Estilo del formulario en dispositivos móviles */
 @media (max-width: 768px) {
     .tareas-form {
-        position: fixed;
-        /* position: relative; */
+        /* position: fixed; */
+        position: relative;
         width: 100%;
-        margin-top: 0%;
+        margin-top: 70px;
         height: auto;
         /* transform: none; */
         opacity: 1;
-        transform: translateY(100%);
+        /* transform: translateY(100%); */
+        transform: translateY(0);
     }
 
     .tareas-form.visible {
         display: block;
-        transform: translateY(-70%);
+        /* transform: translateY(-70%); */
+        transform: translateY(0);
         /* Cuando es visible, regresa a su posición */
         opacity: 1;
     }
 
     .lista-tareas.expanded {
         margin-left: 0;
-        margin-top: 65%;
+        /* margin-top: -162px; */
         /* En móviles no se contrae el listado de tareas */
+        margin-left: 0;
+        margin-top: 0;
     }
 
     .lista-tareas {
-        margin-top: 10px; /* Agrega espacio arriba para el formulario */
+        margin-top: 63px; /* Agrega espacio arriba para el formulario */
     }
 }
 

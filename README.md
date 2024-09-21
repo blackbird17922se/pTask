@@ -23,7 +23,10 @@ Para ejecutar la aplicación **pTask**, es necesario cumplir con los siguientes 
 - **Acceso al repositorio GitHub** donde se encuentra el código fuente y las instrucciones de despliegue.
 
 ## 5. Interacción y Uso
-
+Importante tener en cuenta las credenciales: 
+- nombre de usuario: admin
+- contrasena: 123
+  
 La interfaz de la aplicación pTask es intuitiva y fácil de usar, permitiendo a los usuarios gestionar sus tareas rápidamente. A continuación se describe cómo interactuar con las principales funcionalidades:
 
 ### Crear una Tarea

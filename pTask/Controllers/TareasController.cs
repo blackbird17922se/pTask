@@ -84,8 +84,8 @@ namespace pTask.Controllers
                 }
             }
 
-            // Si la actualización fue exitosa, devuelve un código 204 (No Content)
-            return NoContent();
+            // Devuelve la tarea actualizada
+            return Ok(tareaItem);
         }
 
         // DELETE: api/tareas/{id}

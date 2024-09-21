@@ -2,7 +2,7 @@
     <div>
 
         <!-- BARRA SUPERIOR -->
-        <header class="w-full bg-gray-800 text-white flex justify-between items-center p-4 md:p-6">
+        <header class=" fixed top-0 left-0 w-full bg-gray-800 text-white flex justify-between items-center p-4 md:p-6">
             <!-- Título de la aplicación -->
             <h1 class="text-xl md:text-3xl logo-ptask">pTask</h1>
 
@@ -12,7 +12,15 @@
             </button>
         </header>
 
-        <button @click="cambiarEstadoForm" class="btn-float">+</button>
+        <!-- <button 
+            @click="cambiarEstadoForm" 
+            class="btn-float"
+        >+</button> -->
+        <button @click="cambiarEstadoForm" 
+        :class="['btn-float', { 'bg-red-500': isFormVisible, 'bg-blue-500': !isFormVisible }]">
+    <span v-if="isFormVisible">✖</span>
+    <span v-else>+</span>
+</button>
 
         <!-- FORMULARIO ACCIONES TAREA -->
         <div :class="['tareas-form', { 'visible': isFormVisible }, 'bg-gray-300']">
@@ -250,34 +258,30 @@ export default {
 .lista-tareas {
     flex: 1;
     transition: margin-left 0.3s ease;
-    /* Añade un margen dinámico cuando el formulario se expanda */
 }
 
 
 /* Cuando el formulario está visible en pantallas grandes */
 .lista-tareas.expanded {
     margin-left: 35%;
-    /* Contraer la lista para dejar espacio al formulario (40% ancho del form) */
-
 }
 
 /* Formulario de Crear Tarea */
 .tareas-form {
     display: none;
     transition: transform 0.3s ease, opacity 0.3s ease;
-    /* opacity: 0; */
 }
 
 /* Estilo del formulario en pantallas grandes */
 @media (min-width: 769px) {
     .tareas-form {
         position: fixed;
-        top: 15;
+        top: 14.5%;
         left: 0;
         height: 100%;
         width: 32%;
         /* Ancho del formulario en pantallas grandes */
-        background-color: #c4c4c4;
+        background-color: #f1f1f1;
         padding: 20px;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         /* Sombra para darle efecto de barra lateral */
@@ -293,22 +297,40 @@ export default {
         /* Cuando es visible, regresa a su posición */
         opacity: 1;
     }
+
+    .lista-tareas {
+        margin-top: 30px; /* Agrega espacio arriba para el formulario */
+    }
 }
 
 /* Estilo del formulario en dispositivos móviles */
 @media (max-width: 768px) {
     .tareas-form {
-        position: relative;
+        position: fixed;
+        /* position: relative; */
         width: 100%;
-        margin-top: 10px;
+        margin-top: 0%;
         height: auto;
-        transform: none;
+        /* transform: none; */
+        opacity: 1;
+        transform: translateY(100%);
+    }
+
+    .tareas-form.visible {
+        display: block;
+        transform: translateY(-70%);
+        /* Cuando es visible, regresa a su posición */
         opacity: 1;
     }
 
     .lista-tareas.expanded {
-        margin-right: 0;
+        margin-left: 0;
+        margin-top: 65%;
         /* En móviles no se contrae el listado de tareas */
+    }
+
+    .lista-tareas {
+        margin-top: 10px; /* Agrega espacio arriba para el formulario */
     }
 }
 
@@ -317,14 +339,14 @@ export default {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: #007bff;
-    color: white;
+    color: rgb(255, 255, 255);
     border-radius: 50%;
     width: 60px;
     height: 60px;
     font-size: 24px;
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 h2 {

@@ -70,7 +70,7 @@ namespace pTask.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpireMinutes"])),
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpireMinutes"])), //tiempo de expiracion e totem
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

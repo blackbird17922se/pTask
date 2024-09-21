@@ -39,8 +39,6 @@ namespace pTask.Controllers
         public async Task<IActionResult> Login([FromBody] Usuario request)
         {
             // Busca el usuario en la base de datos
-            //var usaurio = await _context.Usuarios
-            //    .FirstOrDefaultAsync(u => u.Correo == request.Correo && u.Password == request.Password);
             var usaurio = _context.Usuarios.SingleOrDefault(u => u.Nombre == request.Nombre);
 
             // si el usuario no existe o pass invalido

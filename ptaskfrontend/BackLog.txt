@@ -1,11 +1,12 @@
-- corregir fallo q formulario no se ve bien en la otra pantalla
-- quitar comentarios
+
 
 ******** PLUS ******
 
 
 
 ********** DONE ************
+- corregir fallo q formulario no se ve bien en la otra pantalla
+- quitar comentarios
 - documentacion y manual usuario
     !indicar q el ckek solo aparece para editar una tarea
 - mejorar alertas

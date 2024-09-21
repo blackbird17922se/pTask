@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router';
 import LoginApp from '@/components/LoginApp.vue';
 import TareasApp from '@/components/TareasApp.vue';
-import EditarTarea from '@/components/EditarTarea.vue';
 import { isAuthenticated } from './auth';
 
 const routes = [
@@ -24,12 +23,6 @@ const routes = [
             }
         }
 
-    },
-    // TODO: Retirar si editar no se va a usar
-    {
-        path: '/tareas/:id/editar',
-        name: 'EditarTarea',
-        component: EditarTarea // Asegúrate de que TareasApp.vue exista
     },
 ];
 

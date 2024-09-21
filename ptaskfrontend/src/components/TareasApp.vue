@@ -12,10 +12,6 @@
             </button>
         </header>
 
-        <!-- <button 
-            @click="cambiarEstadoForm" 
-            class="btn-float"
-        >+</button> -->
         <button @click="cambiarEstadoForm" 
         :class="['btn-float', { 'bg-red-500': isFormVisible, 'bg-blue-500': !isFormVisible }]">
     <span v-if="isFormVisible">✖</span>
@@ -276,7 +272,7 @@ export default {
 @media (min-width: 769px) {
     .tareas-form {
         position: fixed;
-        top: 88px; /* Dejar espacio por la barra superior */
+        top: 88px;
         left: 0;
         height: calc(100% - 88px); /* Ajustar altura */
         width: 32%;
@@ -297,38 +293,30 @@ export default {
 
     .lista-tareas {
         margin-top: 79px; 
-        /* Agrega espacio arriba para el formulario */
     }
 }
 
 /* Estilo del formulario en dispositivos móviles */
 @media (max-width: 768px) {
     .tareas-form {
-        /* position: fixed; */
-        position: relative;
+        position: fixed;
         width: 100%;
-        margin-top: 70px;
+        /* margin-top: 70px; */
+        top: 70px;
         height: auto;
-        /* transform: none; */
         opacity: 1;
-        /* transform: translateY(100%); */
         transform: translateY(0);
     }
 
     .tareas-form.visible {
         display: block;
-        /* transform: translateY(-70%); */
         transform: translateY(0);
-        /* Cuando es visible, regresa a su posición */
         opacity: 1;
     }
 
     .lista-tareas.expanded {
         margin-left: 0;
-        /* margin-top: -162px; */
-        /* En móviles no se contrae el listado de tareas */
-        margin-left: 0;
-        margin-top: 0;
+        margin-top: 285px;
     }
 
     .lista-tareas {

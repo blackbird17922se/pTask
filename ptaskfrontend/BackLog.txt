@@ -1,0 +1,23 @@
+- revisar visual responsive
+- documentacion y manual usuario
+    !indicar q el ckek solo aparece para editar una tarea
+- mejorar alertas
+    - crear
+    - editar
+    - eliminar
+- quitar comentarios
+
+******** PLUS ******
+agrgar boton al form para cerrar o contraer
+cambiar nombre propiedad "passwHast" a pass
+- correccion nombre de metodos: agragrtarea, cambiarestadotarea
+
+
+********** DONE ************
+que al expirar el tiempo token, la sesion se cierre
+- que al no haber sesion inicada, no se permita acceder a la vista tarea
+- matar sesion
+- quitar check de terminado cuando se crea una tarea
+- habilitar el check solo al editar
+- corregir ubicacion boton crear
+- Adicionar barra superior

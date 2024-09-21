@@ -1,16 +1,20 @@
 <template>
-    <div class="container">
+    <div>
+
+        <!-- BARRA SUPERIOR -->
+        <header class="w-full bg-gray-800 text-white flex justify-between items-center p-4 md:p-6">
+            <!-- Título de la aplicación -->
+            <h1 class="text-xl md:text-3xl logo-ptask">pTask</h1>
+
+            <!-- Botón de cerrar sesión -->
+            <button @click="logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                Cerrar sesión
+            </button>
+        </header>
+
         <button @click="cambiarEstadoForm" class="btn-float">+</button>
 
-
-        <!-- Formulario para agregar nueva tarea -->
-        <!-- El formulario usa el v-model para enlazar las propiedades nombre, 
-          descripcion y completada del objeto nuevaTarea 
-
-        Al enviar el formulario, se llama al método agregarTarea.
-        -->
-
-        <!-- <div v-if="isFormVisible" class="form-container bg-gray-300"> -->
+        <!-- FORMULARIO ACCIONES TAREA -->
         <div :class="['tareas-form', { 'visible': isFormVisible }, 'bg-gray-300']">
             <h2>{{ editando ? 'Editar tarea' : 'Agregar nueva tarea' }}</h2>
             <form @submit.prevent="agregarTarea">
@@ -24,14 +28,22 @@
                     <input type="text" v-model="nuevaTarea.descripcion" class="mt-1 block w-full p-2 border rounded"
                         required>
                 </div>
-                <div>
-                    <label for="completada">Completada:</label>
-                    <input type="checkbox" v-model="nuevaTarea.completada">
+                <div v-if="editando" class="mt-4">
+                    <label for="completada" class="flex items-center space-x-2">
+                        <input
+                            id="completada"
+                            type="checkbox" 
+                            v-model="nuevaTarea.completada"
+                            class="h-6 w-6 text-blue-600 focus:ring-blue-500 border-gray-300 rounded-lg"
+                        />
+                        <span class="text-gray-700">Completada</span>
+                    </label>
                 </div>
-                <button type="submit" class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700">
+                <button type="submit" class="w-full bg-gray-600 text-white py-2 rounded hover:bg-gray-700 mt-6">
                     {{ editando ? 'Guardar Cambios' : 'Agregar Tarea' }}
                 </button>
             </form>
+            <p v-if="creado" class="text-blue-500 mt-2">{{ "Tarea Creada Correctamente" }}</p>
         </div>
 
         <!-- Listado de Tareas -->
@@ -42,23 +54,19 @@
                 <div v-for="tarea in tareas" :key="tarea.id" class="bg-white shadow-md rounded-lg p-4">
                     <h3 class="text-lg font-bold">{{ tarea.nombre }}</h3>
                     <p class="text-sm text-gray-600">{{ tarea.descripcion }}</p>
+                    <p class="text-sm text-gray-600 font-bold">{{ tarea.completada? 'Completada' : 'Pediente' }}</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <!-- agregar el cher de completada aqui -->
                         <div class="space-x-2">
                             <button @click="editarTarea(tarea.id)"
-                                class="bg-blue-500 text-white px-4 py-2 rounded">Editar</button>
-                            <!-- <router-link :to="`/tareas/${tarea.id}/editar`">Editar</router-link> -->
+                                class="bg-blue-500 text-white px-4 py-2 rounded">Editar
+                            </button>
                             <button @click="eliminarTarea(tarea.id)"
-                                class="bg-red-500 text-white px-4 py-2 rounded">Eliminar</button>
-
+                                class="bg-red-500 text-white px-4 py-2 rounded">Eliminar
+                            </button>
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
     </div>
 </template>
@@ -80,7 +88,8 @@ export default {
                 completada: false
             },
             editando: false, // Indica si estamos en modo edición
-            tareaSeleccionada: null // La tarea que estamos editando
+            tareaSeleccionada: null, // La tarea que estamos editando
+            creado: false
         };
     },
 
@@ -98,6 +107,13 @@ export default {
     },
 
     methods: {
+
+        /** Lógica para cerrar sesión, por ejemplo, eliminar el token de localStorage */
+        logout() {
+            localStorage.removeItem("token"); // Elimina el token
+            this.$router.push("/login");
+        },
+
         // Método para obtener las tareas
         async obtenerTareas() {
             try {
@@ -120,6 +136,7 @@ export default {
 
         // Método para agregar una nueva tarea
         async agregarTarea() {
+
             try {
 
                 /* agregarTarea, usamos Axios para enviar la nueva tarea al backend. Nos aseguramos de pasar el 
@@ -140,7 +157,8 @@ export default {
                         console.log("Datos recibidos del servidor para actualizar tarea:", response.data);
                         this.tareas[index] = response.data;
                     }
-                    alert('Tarea actualizada con éxito');
+                    // alert('Tarea actualizada con éxito');
+                    this.isFormVisible = false;
 
                 } else {
                     // Agregar nueva tarea
@@ -151,7 +169,9 @@ export default {
                     });
                     /* Una vez que la tarea se agrega con éxito, la incluimos en el array tareas y reiniciamos el formulario. */
                     this.tareas.push(response.data);
-                    alert('Tarea agregada con éxito');
+                    // alert('Tarea agregada con éxito');
+                    this.creado = true;
+                    this.isFormVisible = true;
 
                 }
 
@@ -162,12 +182,12 @@ export default {
                     completada: false
                 };
 
-                this.isFormVisible = true;
                 this.editando = false;
 
             } catch (error) {
                 console.error('Error al agregar/editar tarea:', error);
                 alert('Error al agregar/editar tarea');
+                this.creado = false;
             }
         },
 
@@ -181,7 +201,7 @@ export default {
                     }
                 });
                 this.tareas = this.tareas.filter(tarea => tarea.id !== id);
-                alert('Tarea eliminada con éxito');
+                // alert('Tarea eliminada con éxito');
 
             } catch (error) {
                 console.error('Error al eliminar tarea:', error);
@@ -204,6 +224,7 @@ export default {
         async cambiarEstadoForm() {
             this.isFormVisible = !this.isFormVisible;
             if (!this.isFormVisible) {
+                this.creado = false;
                 // Resetear si se cierra el formulario
                 this.nuevaTarea = { nombre: '', descripcion: '', completada: false };
                 this.editando = false;
@@ -247,18 +268,16 @@ export default {
     /* opacity: 0; */
 }
 
-
-
 /* Estilo del formulario en pantallas grandes */
 @media (min-width: 769px) {
     .tareas-form {
         position: fixed;
-        top: 0;
+        top: 15;
         left: 0;
         height: 100%;
         width: 32%;
         /* Ancho del formulario en pantallas grandes */
-        background-color: #ffffff;
+        background-color: #c4c4c4;
         padding: 20px;
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
         /* Sombra para darle efecto de barra lateral */
@@ -296,8 +315,8 @@ export default {
 /* Botón Flotante */
 .btn-float {
     position: fixed;
-    bottom: 20px;
-    right: 500px;
+    bottom: 30px;
+    right: 30px;
     background-color: #007bff;
     color: white;
     border-radius: 50%;
@@ -312,5 +331,12 @@ h2 {
     font-size: 30px;
     color: rgba(0, 0, 0, 0.884);
     font-style: italic;
+}
+
+.logo-ptask {
+  color: rgb(255 255 255 / 58%);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bolder;
+  font-style: italic;
 }
 </style>

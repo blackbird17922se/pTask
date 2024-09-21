@@ -52,7 +52,7 @@ export default {
 
         // Guardar el token en localStorage
         localStorage.setItem('token', response.data.token);
-        alert('Login exitos');
+        // alert('Login exitos');
 
         // redirigir a la vista tareas
         this.$router.push('/tareas');
